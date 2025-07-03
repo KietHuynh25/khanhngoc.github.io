@@ -1,0 +1,1793 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ngoc Tran Xuan Khanh - Portfolio</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f0f9ff 0%, #fff1f8 50%, #f0f9ff 100%);
+            color: #374151;
+            overflow-x: hidden;
+        }
+
+        /* Video background */
+        #bg-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+            opacity: 0.3;
+        }
+
+        /* Animated background particles */
+        .bg-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(251, 191, 36, 0.15);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+            }
+        }
+
+        /* Navigation */
+        .nav-container {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            backdrop-filter: blur(20px);
+            background: rgba(255, 203, 219, 0.9);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 20px rgba(255, 203, 219, 0.2);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: center;
+            padding: 1rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 2rem;
+            background: rgba(255, 255, 255, 0.4);
+            padding: 0.7rem;
+            border-radius: 25px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(255, 203, 219, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .nav-tab {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            background: transparent;
+            color: #6b7280;
+            cursor: pointer;
+            border-radius: 20px;
+            transition: all 0.4s ease;
+            font-weight: 500;
+            position: relative;
+            letter-spacing: 0.025em;
+        }
+
+        .nav-tab:hover,
+        .nav-tab.active {
+            color: #374151;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.6));
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(108, 208, 208, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        /* Content sections */
+        .content {
+            margin-top: 80px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section {
+            display: none;
+            min-height: calc(100vh - 80px);
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Home Section */
+        .hero {
+            text-align: center;
+            padding: 8rem 0;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(255, 203, 219, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            color: #374151;
+        }
+
+        .hero-tagline {
+            font-size: 1.5rem;
+            color: #374151;
+            margin-bottom: 2rem;
+            font-weight: 600;
+            letter-spacing: 0.025em;
+        }
+
+        .portrait-container {
+            margin: 2rem auto 4rem;
+            text-align: center;
+        }
+
+        .portrait-image {
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 15px 40px rgba(108, 208, 208, 0.3);
+            transition: all 0.4s ease;
+        }
+
+        .portrait-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 50px rgba(255, 203, 219, 0.4);
+        }
+
+        .photo-gallery {
+            margin: 4rem auto;
+            max-width: 1000px;
+            text-align: center;
+        }
+
+        .gallery-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            color: #374151;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(108, 208, 208, 0.2);
+            transition: all 0.4s ease;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(255, 203, 219, 0.3);
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: all 0.4s ease;
+        }
+
+        .gallery-image:hover {
+            transform: scale(1.1);
+        }
+
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            font-weight: 500;
+            transform: translateY(100%);
+            transition: all 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-caption {
+            transform: translateY(0);
+        }
+
+        .gallery-category-card {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 2rem;
+            border-radius: 20px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 32px rgba(177, 221, 201, 0.1);
+        }
+
+        .gallery-category-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(255, 203, 219, 0.3);
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .category-header i {
+            font-size: 1.5rem;
+        }
+
+        .category-header h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #374151;
+            margin: 0;
+        }
+
+        .category-description {
+            color: #6b7280;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+        }
+
+        .category-images {
+            display: flex;
+            justify-content: center;
+        }
+
+        .category-image {
+            width: 100%;
+            max-width: 200px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .category-image:hover {
+            transform: scale(1.05);
+        }
+
+        .personal-statement {
+            margin: 4rem auto;
+            text-align: left;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 3rem;
+            border-radius: 25px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 8px 32px rgba(255, 203, 219, 0.2);
+        }
+
+        .quote {
+            font-size: 2rem;
+            font-style: italic;
+            color: #34c4e0;
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .quote::before,
+        .quote::after {
+            content: '"';
+            font-size: 3rem;
+            color: #FFCBDB;
+            position: absolute;
+        }
+
+        .quote::before {
+            left: -2rem;
+            top: -1rem;
+        }
+
+        .quote::after {
+            right: -2rem;
+            bottom: -1rem;
+        }
+
+        .statement-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #4b5563;
+            margin-bottom: 2rem;
+        }
+
+        .career-section {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 3rem;
+            border-radius: 25px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            margin: 3rem 0;
+            box-shadow: 0 8px 32px rgba(177, 221, 201, 0.2);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: #374151;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(135deg, #6CD0D0, #FFCBDB);
+            border-radius: 2px;
+        }
+
+        /* Contact Section */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            background: rgba(99, 102, 241, 0.5);
+            transform: translateX(10px);
+        }
+
+        .contact-item i {
+            font-size: 1.5rem;
+            color: #6366f1;
+            width: 30px;
+        }
+
+        .contact-form {
+            background: rgba(255, 255, 255, 0.5);
+            padding: 2rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #0fadd1;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(99, 102, 241, 0.4);
+        }
+
+        /* Achievement Cards */
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .achievement-card {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 2.5rem;
+            border-radius: 25px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(177, 221, 201, 0.1);
+        }
+
+        .achievement-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(135deg, #6CD0D0, #FFCBDB, #B1DDC9);
+        }
+
+        .achievement-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 50px rgba(108, 208, 208, 0.3);
+            border: 1px solid rgba(255, 203, 219, 0.6);
+        }
+
+        .achievement-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #374151;
+        }
+
+        .achievement-desc {
+            color: #6b7280;
+            line-height: 1.6;
+        }
+
+        /* Leadership & Community */
+        .leadership-section {
+            margin-bottom: 4rem;
+        }
+
+        .leadership-category {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+
+        .category-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #6CD0D0;
+        }
+
+        .leadership-item {
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 15px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #B1DDC9;
+            transition: all 0.3s ease;
+        }
+
+        .leadership-item:hover {
+            background: rgba(177, 221, 201, 0.3);
+            transform: translateX(5px);
+        }
+
+        .leadership-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #374151;
+        }
+
+        .leadership-role {
+            color: #FB6F92;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .leadership-desc {
+            color: #6b7280;
+            line-height: 1.5;
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .skill-category {
+            background: rgba(255, 255, 255, 0.6);
+            padding: 2rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(177, 221, 201, 0.4);
+        }
+
+        .skill-category h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #6CD0D0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .skill-item {
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .skill-item:hover {
+            background: rgba(177, 221, 201, 0.3);
+        }
+
+        /* Recommendations */
+        .recommendations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .recommendation-card {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 2.5rem;
+            border-radius: 25px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            position: relative;
+            box-shadow: 0 8px 32px rgba(177, 221, 201, 0.1);
+            transition: all 0.4s ease;
+        }
+
+        .recommendation-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(255, 203, 219, 0.3);
+        }
+
+        .recommendation-quote {
+            font-size: 1.2rem;
+            font-style: italic;
+            color: #4b5563;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .recommendation-author {
+            font-weight: 600;
+            color: #6CD0D0;
+        }
+
+        .recommendation-role {
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-tabs {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-tagline {
+                font-size: 1.2rem;
+            }
+
+            .portrait-image {
+                width: 280px;
+                height: 280px;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 1rem;
+            }
+
+            .gallery-image {
+                height: 200px;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .achievements-grid,
+            .skills-grid,
+            .recommendations-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .quote {
+                font-size: 1.5rem;
+            }
+
+            .quote::before,
+            .quote::after {
+                display: none;
+            }
+        }
+
+        /* Scroll animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Modal styles for image zoom */
+        .image-modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-content {
+            position: relative;
+            margin: auto;
+            display: block;
+            width: 90%;
+            height: 90%;
+            max-width: 1200px;
+            max-height: 800px;
+            object-fit: contain;
+            animation: zoom 0.3s ease;
+        }
+
+        @keyframes zoom {
+            from {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+            z-index: 10000;
+        }
+
+        .close-modal:hover,
+        .close-modal:focus {
+            color: #bbb;
+            text-decoration: none;
+        }
+
+        .modal-caption {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #ccc;
+            text-align: center;
+            font-size: 16px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+
+        /* Make all images clickable */
+        .gallery-image,
+        .category-image,
+        .portrait-image {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-image:hover,
+        .category-image:hover,
+        .portrait-image:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Video background -->
+    <video autoplay loop muted id="bg-video">
+        <source src="attached_assets/video1_1750146674172.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- Background particles -->
+    <div class="bg-particles" id="particles"></div>
+
+    <!-- Navigation -->
+    <div class="nav-container">
+        <nav class="nav">
+            <div class="nav-tabs">
+                <button class="nav-tab active" data-section="home">
+                    <i class="fas fa-home"></i> Home
+                </button>
+                <button class="nav-tab" data-section="academic">
+                    <i class="fas fa-trophy"></i> Academic Achievements
+                </button>
+                <button class="nav-tab" data-section="leadership">
+                    <i class="fas fa-users"></i> Leadership & Community
+                </button>
+                <button class="nav-tab" data-section="skills">
+                    <i class="fas fa-code"></i> Skills & Certifications
+                </button>
+                <button class="nav-tab" data-section="recommendations">
+                    <i class="fas fa-star"></i> Recommendations
+                </button>
+                <button class="nav-tab" data-section="gallery">
+                    <i class="fas fa-images"></i> Photo Gallery
+                </button>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+        <!-- Home Section -->
+        <section id="home" class="section active">
+            <div class="hero">
+                <h1 class="hero-title fade-in">Ngoc Xuan Khanh Tran</h1>
+                <p class="hero-tagline fade-in">Aspiring Software/Data Engineer | Community Leader | Young Innovator</p>
+                <div class="portrait-container fade-in">
+                    <img src="attached_assets/IMG_7029_1750145639071.JPG" alt="Ngoc Tran Xuan Khanh Portrait"
+                        class="portrait-image">
+                </div>
+
+                <!-- Photo Gallery Section -->
+                <div class="photo-gallery fade-in">
+                    <h3 class="gallery-title">More About Me</h3>
+                    <div class="gallery-grid">
+                        <div class="gallery-item">
+                            <img src="attached_assets/ok2_1751330017873.jpg"
+                                alt="Achievement showcase with certificates" class="gallery-image">
+                        </div>
+                        <div class="gallery-item">
+                            <img src="attached_assets/ok3_1751330017873.JPG" alt="Professional portrait with ID badge"
+                                class="gallery-image">
+                        </div>
+                        <div class="gallery-item">
+                            <img src="attached_assets/ok4_1751330017874.jpg" alt="Casual portrait"
+                                class="gallery-image">
+                        </div>
+                        <div class="gallery-item">
+                            <img src="attached_assets/ok_1751330017872.jpg" alt="Working at laptop"
+                                class="gallery-image">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="personal-statement fade-in">
+                <h2 class="section-title">Introduction</h2>
+                <div class="quote">You have to find what sparks a light in you so that you, in your own way, can
+                    illuminate the world.<br><span
+                        style="text-align: right; font-size: 0.5em; font-style: normal; color: #6b7280;">— Oprah
+                        Winfrey</span></div>
+                <p class="statement-text">
+                    Hi, I'm Ngoc – a tech-driven dreamer with a heart for humanity.
+                </p>
+                <p class="statement-text">
+                    I merge technical skills with human-centric values, transforming digital solutions into meaningful
+                    impact. Whether through innovative technologies or community initiatives, I believe progress should
+                    always serve a greater purpose - to connect, empower and elevate people's lives.
+                </p>
+                <p class="statement-text">
+                    Beyond the screen, you’ll find me sketching random ideas, volunteering at shelters, or obsessing
+                    over sci-fi’s portrayal of ethics in tech.
+                </p>
+                <p class="statement-text">
+                    Let’s connect – because the best innovations begin with shared stories.
+                </p>
+            </div>
+
+            <div class="career-section fade-in">
+                <h2 class="section-title">Career Aspirations</h2>
+                <p class="statement-text">
+                    I aim to become a software and data engineer specializing in assistive technologies that break
+                    barriers and serve real human needs. RMIT's Software Engineering program, with its strong focus on
+                    artificial intelligence, data, and industry collaboration, offers the perfect platform to advance my
+                    skills and leadership.
+                </p>
+                <p class="statement-text">
+                    Through RMIT's values of inclusion, impact, and imagination, I hope to grow into not just an
+                    engineer, but a builder of accessible solutions that create lasting, meaningful change.
+                </p>
+            </div>
+
+            <div class="contact-grid fade-in">
+                <div class="contact-info">
+                    <h3 class="section-title">Get In Touch</h3>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>ngoc44379@gmail.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fab fa-github"></i>
+                        <span>github.com/ntranxk</span>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <h3 style="margin-bottom: 1.5rem;">Send me a message</h3>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-paper-plane"></i> Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Academic Achievements Section -->
+        <section id="academic" class="section">
+            <h1 class="section-title fade-in">Academic Achievements</h1>
+            <div class="achievements-grid">
+                <div class="achievement-card fade-in">
+                    <h3 class="achievement-title">
+                        <i class="fas fa-medal" style="color: #6CD0D0; margin-right: 0.5rem;"></i>
+                        Vietnam Science and Engineering Fair (ViSEF) 2025
+                    </h3>
+                    <div class="achievement-desc">
+                        <strong>National Fourth Prize</strong><br>
+                        Project: MOTIONLENS - Assistive Eyewear Integrated with Computer Vision Software
+                    </div>
+                </div>
+
+                <div class="achievement-card fade-in">
+                    <h3 class="achievement-title">
+                        <i class="fas fa-trophy" style="color: #FFCBDB; margin-right: 0.5rem;"></i>
+                        Provincial Science and Engineering Fair
+                    </h3>
+                    <div class="achievement-desc">
+                        <strong>First Prize (2025)</strong><br>
+                        Excellence in scientific research and innovation
+                    </div>
+                </div>
+
+                <div class="achievement-card fade-in">
+                    <h3 class="achievement-title">
+                        <i class="fas fa-award" style="color: #B1DDC9; margin-right: 0.5rem;"></i>
+                        Provincial Selection Round
+                    </h3>
+                    <div class="achievement-desc">
+                        <strong>First Prize (2025)</strong><br>
+                        Outstanding performance in competitive selection
+                    </div>
+                </div>
+
+                <div class="achievement-card fade-in">
+                    <h3 class="achievement-title">
+                        <i class="fas fa-star" style="color: #FBCEB1; margin-right: 0.5rem;"></i>
+                        School-Level Science and Engineering Fair
+                    </h3>
+                    <div class="achievement-desc">
+                        <strong>Third Prize (2025)</strong><br>
+                        Recognition for innovative project development
+                    </div>
+                </div>
+
+                <div class="achievement-card fade-in">
+                    <h3 class="achievement-title">
+                        <i class="fas fa-language" style="color: #6CD0D0; margin-right: 0.5rem;"></i>
+                        English Language Contest
+                    </h3>
+                    <div class="achievement-desc">
+                        <strong>First Prize (Town Level, 2022)</strong><br>
+                        <strong>Third Prize (Provincial Level, 2022)</strong><br>
+                        Excellence in English language proficiency
+                    </div>
+                </div>
+
+                <div class="achievement-card fade-in" style="grid-column: 1 / -1; max-width: none;">
+                    <h3 class="achievement-title">
+                        <i class="fas fa-eye" style="color: #FFCBDB; margin-right: 0.5rem;"></i>
+                        Learn more about MOTIONLENS
+                    </h3>
+                    <div class="achievement-desc" style="margin-bottom: 2rem;">
+                        <strong>Assistive Eyewear Integrated with Computer Vision Software</strong><br>
+                        Detailed research posters showcasing the development, methodology, and impact of the MOTIONLENS project that earned national recognition at ViSEF 2025.
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+                        <div style="text-align: center;">
+                            <img src="attached_assets/Poster-images-0_1751520964580.jpg" 
+                                 alt="MOTIONLENS Research Poster - Project Overview and Problem Statement" 
+                                 class="category-image" 
+                                 style="width: 100%; height: auto; max-height: 400px; object-fit: contain; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                            <p style="margin-top: 1rem; color: #6b7280; font-size: 0.9rem;">Project Overview & Research Methodology</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <img src="attached_assets/Poster-images-1_1751521204266.jpg" 
+                                 alt="MOTIONLENS Research Poster - Technical Specifications and System Integration" 
+                                 class="category-image" 
+                                 style="width: 100%; height: auto; max-height: 400px; object-fit: contain; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                            <p style="margin-top: 1rem; color: #6b7280; font-size: 0.9rem;">Technical Specifications & System Integration</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <img src="attached_assets/Poster-images-2_1751520973144.jpg" 
+                                 alt="MOTIONLENS Research Poster - Development Process and Technical Implementation" 
+                                 class="category-image" 
+                                 style="width: 100%; height: auto; max-height: 400px; object-fit: contain; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                            <p style="margin-top: 1rem; color: #6b7280; font-size: 0.9rem;">Development Process & Technical Implementation</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Leadership & Community Section -->
+        <section id="leadership" class="section">
+            <h1 class="section-title fade-in">Leadership & Community</h1>
+
+            <div class="leadership-section fade-in">
+                <div class="leadership-category">
+                    <h2 class="category-title">
+                        <i class="fas fa-leaf" style="margin-right: 0.5rem;"></i>
+                        Social & Environmental Leadership
+                    </h2>
+
+                    <div class="leadership-item">
+                        <h3 class="leadership-title">WeChange Environmental Nonprofit</h3>
+                        <div class="leadership-role">Co-Founder (2023-2024)</div>
+                        <p class="leadership-desc">Led eco-education, plastic waste reduction, and charitable campaigns
+                            to create environmental awareness and sustainable practices in the community.</p>
+                    </div>
+
+                    <div class="leadership-item">
+                        <h3 class="leadership-title">TRĂNG XANH Mid-Autumn Project</h3>
+                        <div class="leadership-role">Co-Leader (2024)</div>
+                        <p class="leadership-desc">Organized sensory-friendly events for children with autism, ADHD, and
+                            speech impairments, creating inclusive celebration experiences.</p>
+                    </div>
+
+                    <div class="leadership-item">
+                        <h3 class="leadership-title">Thắp sáng những vì sao Festival</h3>
+                        <div class="leadership-role">Co-Leader (2023)</div>
+                        <p class="leadership-desc">Organized activities for orphans and elderly at the Tien Giang Social
+                            Support Centre, bringing joy and community connection.</p>
+                    </div>
+
+                    <div class="leadership-item">
+                        <h3 class="leadership-title">Floracle Recycled Christmas Tree Initiative</h3>
+                        <div class="leadership-role">Workshop Co-Leader (2023)</div>
+                        <p class="leadership-desc">Led creative workshops and fundraised for special needs children,
+                            combining environmental consciousness with social impact.</p>
+                    </div>
+                </div>
+
+                <div class="leadership-category">
+                    <h2 class="category-title">
+                        <i class="fas fa-school" style="margin-right: 0.5rem;"></i>
+                        School & Club Leadership
+                    </h2>
+
+                    <div class="leadership-item">
+                        <h3 class="leadership-title">CTG Studio Photography Club</h3>
+                        <div class="leadership-role">Head of Media (2023-2024)</div>
+                        <p class="leadership-desc">Led visual storytelling initiatives and managed digital content
+                            creation for school events and activities.</p>
+                    </div>
+
+                    <div class="leadership-item">
+                        <h3 class="leadership-title">Youth Union Executive Committee</h3>
+                        <div class="leadership-role">Collaborator (2023-Present)</div>
+                        <p class="leadership-desc">Actively participated in student governance and community outreach
+                            programs.</p>
+                    </div>
+
+                    <div class="leadership-item">
+                        <h3 class="leadership-title">CTG English Club</h3>
+                        <div class="leadership-role">PR Team Member (2023-Present)</div>
+                        <p class="leadership-desc">Promoted English learning activities and organized cultural exchange
+                            events.</p>
+                    </div>
+
+                    <div class="leadership-item">
+                        <h3 class="leadership-title">Technocode Project</h3>
+                        <div class="leadership-role">Technical Member (2023)</div>
+                        <p class="leadership-desc">Contributed technical expertise to coding workshops and technology
+                            education initiatives.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills & Certifications Section -->
+        <section id="skills" class="section">
+            <h1 class="section-title fade-in">Skills & Certifications</h1>
+
+            <div class="skills-grid">
+                <div class="skill-category fade-in">
+                    <h3>
+                        <i class="fas fa-graduation-cap"></i>
+                        Courses
+                    </h3>
+
+                    <div class="skill-item">
+                        <h4 style="color: #374151; margin-bottom: 0.5rem;">Kode With Klossy Scholar - Data Science Camp
+                            2025</h4>
+                        <p style="color: #6b7280; font-size: 0.9rem;">Intensive data science training program focusing
+                            on machine learning and data analysis</p>
+                    </div>
+
+                    <div class="skill-item">
+                        <h4 style="color: #374151; margin-bottom: 0.5rem;">Foundation Python - Codegym (2023-2024)</h4>
+                        <p style="color: #6b7280; font-size: 0.9rem;">Comprehensive Python programming fundamentals and
+                            application development</p>
+                    </div>
+
+                    <div class="skill-item">
+                        <h4 style="color: #374151; margin-bottom: 0.5rem;">Data Analyst Program - Codegym (2023-2024)
+                        </h4>
+                        <p style="color: #6b7280; font-size: 0.9rem;">Advanced data analysis techniques, visualization,
+                            and statistical modeling</p>
+                    </div>
+                </div>
+
+                <div class="skill-category fade-in">
+                    <h3>
+                        <i class="fas fa-certificate"></i>
+                        Certifications
+                    </h3>
+
+                    <div class="skill-item">
+                        <h4 style="color: #374151; margin-bottom: 0.5rem;">ViSEF Certificates</h4>
+                        <p style="color: #6b7280; font-size: 0.9rem;">Vietnam Science and Engineering Fair recognition
+                            certificates</p>
+                    </div>
+
+                    <div class="skill-item">
+                        <h4 style="color: #374151; margin-bottom: 0.5rem;">Data Analyst Certification</h4>
+                        <p style="color: #6b7280; font-size: 0.9rem;">Professional certification in data analysis and
+                            visualization</p>
+                    </div>
+
+                    <div class="skill-item">
+                        <h4 style="color: #374151; margin-bottom: 0.5rem;">Leadership Certifications</h4>
+                        <p style="color: #6b7280; font-size: 0.9rem;">Various leadership and project management
+                            certifications</p>
+                    </div>
+
+                    <div class="skill-item">
+                        <h4 style="color: #374151; margin-bottom: 0.5rem;">Field Testing & Membership Certifications
+                        </h4>
+                        <p style="color: #6b7280; font-size: 0.9rem;">Technical field testing and professional
+                            membership recognitions</p>
+                    </div>
+                </div>
+
+                <div class="skill-category fade-in">
+                    <h3>
+                        <i class="fas fa-code"></i>
+                        Technical Skills
+                    </h3>
+
+                    <div class="skill-item">
+                        <h4 style="color: #374151; margin-bottom: 0.5rem;">Programming Languages</h4>
+                        <p style="color: #6b7280; font-size: 0.9rem;">Python, JavaScript, HTML/CSS</p>
+                    </div>
+
+                    <div class="skill-item">
+                        <h4 style="color: #374151; margin-bottom: 0.5rem;">Data Science & AI</h4>
+                        <p style="color: #6b7280; font-size: 0.9rem;">Machine Learning, Computer Vision, Data Analysis,
+                            Statistical Modeling</p>
+                    </div>
+
+                    <div class="skill-item">
+                        <h4 style="color: #374151; margin-bottom: 0.5rem;">Project Development</h4>
+                        <p style="color: #6b7280; font-size: 0.9rem;">MOTIONLENS - Assistive Technology, IoT
+                            Integration, User Experience Design</p>
+                    </div>
+                    <div class="skill-item">
+                        <h4 style="color: #374151; margin-bottom: 0.5rem;">Data Analyst Program - Codegym (2023-2024)
+                        </h4>
+                        <p style="color: #a0a9c0; font-size: 0.9rem;">Advanced data analysis techniques, visualization,
+                            and statistical modeling</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recommendations Section -->
+        <section id="recommendations" class="section">
+            <h1 class="section-title fade-in">Recommendations</h1>
+
+            <div class="recommendations-grid">
+                <!-- WeChange Project -->
+                <div class="recommendation-card fade-in">
+                    <div class="recommendation-quote">
+                        "Working with you for a short time, I could see your dedication to the project. You always bring
+                        a proactive spirit, eagerly learning and innovating throughout the process. Not only do you
+                        excel in using technological skills, but you also know how to apply them to optimize workflows,
+                        save time, and remain flexible in various tasks."
+                    </div>
+                    <div class="recommendation-author">Thao Vy</div>
+                    <div class="recommendation-role">Founder - WeChange Environmental Project</div>
+                </div>
+
+                <div class="recommendation-card fade-in">
+                    <div class="recommendation-quote">
+                        "During our collaboration, I was most impressed by Ngoc's proficiency in using software.
+                        Although the project offered limited opportunities for you to showcase your skills, your
+                        outstanding strengths were still evident. Your ability to apply software effectively and your
+                        dedication to research and contribution to the project are significant strengths in my view of
+                        Ngoc."
+                    </div>
+                    <div class="recommendation-author">Anh Duong</div>
+                    <div class="recommendation-role">Cofounder - WeChange Environmental Project</div>
+                </div>
+
+                <!-- TRĂNG XANH Project -->
+                <div class="recommendation-card fade-in">
+                    <div class="recommendation-quote">
+                        "Skilled, compassionate, and adaptable—these are the words I use to describe Ngoc. I'm proud to
+                        have such an exceptional leader. Ngoc always creates a pleasant and comfortable working
+                        atmosphere with innovative and exciting software. She never hesitates to guide others, and for
+                        the first time, she made me realize that using technology isn't as daunting as it seems."
+                    </div>
+                    <div class="recommendation-author">Phuong Vy</div>
+                    <div class="recommendation-role">Member - TRĂNG XANH Mid-Autumn Project</div>
+                </div>
+
+                <div class="recommendation-card fade-in">
+                    <div class="recommendation-quote">
+                        "Ngoc is my idol, a true role model I aspire to follow. She is not only compassionate but also
+                        exceptionally skilled in using technology. As someone who was quite clueless about technology,
+                        especially in today's world where it's essential for everything—including the project I joined—I
+                        felt supported by Ngoc. Thanks to her, I never felt alone or insecure when starting the
+                        project."
+                    </div>
+                    <div class="recommendation-author">Khanh Bang</div>
+                    <div class="recommendation-role">Member - TRĂNG XANH Mid-Autumn Project</div>
+                </div>
+
+                <div class="recommendation-card fade-in">
+                    <div class="recommendation-quote">
+                        "I admire how Ngoc connects the project with kids and everyone involved. From her adept use of
+                        versatile software for planning and managing activities to her clear and engaging communication,
+                        she stands out. Her ability to use technology as a catalyst to bring people together, ensuring
+                        no one—regardless of background—is left behind or forgotten, is exactly the model our project
+                        seeks and should aspire to."
+                    </div>
+                    <div class="recommendation-author">Khanh Han</div>
+                    <div class="recommendation-role">Member - TRĂNG XANH Mid-Autumn Project</div>
+                </div>
+
+                <!-- Thắp sáng những vì sao Project -->
+                <div class="recommendation-card fade-in">
+                    <div class="recommendation-quote">
+                        "I am truly impressed by Ngoc's way of working, which reflects a deep sense of humanity. She
+                        combines excellent technological skills with a compassionate heart—a quality I hope all team
+                        members can emulate. Throughout the project, Ngoc generously guided and supported others,
+                        helping everyone, especially the target group, to better embrace and use technology."
+                    </div>
+                    <div class="recommendation-author">Hoang Viet</div>
+                    <div class="recommendation-role">President - Thắp sáng những vì sao Festival</div>
+                </div>
+
+                <div class="recommendation-card fade-in">
+                    <div class="recommendation-quote">
+                        "As someone working directly with Ngoc, I greatly admire how she connects team members to grow
+                        together. Her solutions, utilizing practical, user-friendly, and accessible software, are
+                        perfectly suited for our target group. Ngoc's approach successfully builds a bridge for everyone
+                        by sharing her knowledge and software skills. I truly appreciate this quality in her."
+                    </div>
+                    <div class="recommendation-author">To Trinh</div>
+                    <div class="recommendation-role">Vice President - Thắp sáng những vì sao Festival</div>
+                </div>
+
+                <!-- CTG English Club -->
+                <div class="recommendation-card fade-in">
+                    <div class="recommendation-quote">
+                        "When it comes to software skills, Ngoc is undoubtedly the first name that comes to mind.
+                        Despite her background in English, her ability to use software and handle computer tasks is
+                        exceptional. She even guides team members on how to learn through applications in the most
+                        effective and accessible way. To me, Ngoc is the most curious, inquisitive, and dedicated person
+                        I've ever known when it comes to exploring various aspects of technology."
+                    </div>
+                    <div class="recommendation-author">Anh Thu</div>
+                    <div class="recommendation-role">President - CTG English Club</div>
+                </div>
+
+                <!-- Kode With Klossy -->
+                <div class="recommendation-card fade-in">
+                    <div class="recommendation-quote">
+                        "It was an absolute pleasure to work with Ngoc in the Data Science Camp. She stood out for her
+                        technical ability to quickly grasp Python and data visualization tools. What impressed me most
+                        was how she constantly asked thoughtful questions, explored beyond the syllabus, and applied
+                        what she learned to a meaningful project aimed at helping underserved communities. Ngoc
+                        possesses a rare combination of empathy and analytical thinking – a quality that's essential in
+                        the tech world today."
+                    </div>
+                    <div class="recommendation-author">Kait</div>
+                    <div class="recommendation-role">Teaching Assistant - Kode With Klossy</div>
+                </div>
+
+                <!-- Codegym -->
+                <div class="recommendation-card fade-in">
+                    <div class="recommendation-quote">
+                        "Throughout the course, you consistently demonstrated both technical competence and a deep sense
+                        of purpose. You approached every assignment with curiosity and clarity, especially when
+                        interpreting real-world datasets. More than just meeting course expectations, you took
+                        initiative to explore ethical applications of data and asked questions that reflected a broader
+                        social awareness."
+                    </div>
+                    <div class="recommendation-author">Tien Dinh</div>
+                    <div class="recommendation-role">Coach - Codegym DA Course</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Photo Gallery Section -->
+        <section id="gallery" class="section">
+            <h1 class="section-title fade-in">Photo Gallery</h1>
+
+            <div class="photo-gallery fade-in">
+                <p style="text-align: center; font-size: 1.2rem; color: #6b7280; margin-bottom: 3rem;">
+                    A collection of moments from my journey in academics, leadership, and community service.
+                </p>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem;">
+                    <!-- Floracle Card -->
+                    <div class="gallery-category-card fade-in">
+                        <div class="category-header">
+                            <i class="fas fa-tree" style="color: #B1DDC9;"></i>
+                            <h3>Floracle</h3>
+                        </div>
+                        <p class="category-description">Recycled Christmas Tree Initiative - Workshop co-leadership and
+                            fundraising for special needs children</p>
+                        <div class="category-images"
+                            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
+                            <img src="attached_assets/Floracle_1_1751331118714.jpg" alt="Floracle heart craft project"
+                                class="category-image" style="height: 120px;">
+                            <img src="attached_assets/Floracle_2_1751331118717.jpg"
+                                alt="Floracle team with recycled Christmas trees" class="category-image"
+                                style="height: 120px;">
+                            <img src="attached_assets/Floracle_3_1751331118718.jpg"
+                                alt="Floracle group photo with participants" class="category-image"
+                                style="height: 120px;">
+                        </div>
+                    </div>
+
+                    <!-- Thắp sáng những vì sao Card -->
+                    <div class="gallery-category-card fade-in">
+                        <div class="category-header">
+                            <i class="fas fa-star" style="color: #FFCBDB;"></i>
+                            <h3>Thắp sáng những vì sao</h3>
+                        </div>
+                        <p class="category-description">Festival activities for orphans and elderly at the Tien Giang
+                            Social Support Centre</p>
+                        <div class="category-images"
+                            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1rem;">
+                            <img src="attached_assets/tsnvs_1751331224310.jpg" alt="Festival decorations and lanterns"
+                                class="category-image" style="height: 120px;">
+                            <img src="attached_assets/tsnvs1_1751331224312.jpg"
+                                alt="Large group photo with students and participants" class="category-image"
+                                style="height: 120px;">
+                            <img src="attached_assets/tsnvs2_1751331224314.jpg"
+                                alt="Team photo during festival activities" class="category-image"
+                                style="height: 120px;">
+                            <img src="attached_assets/tsnvs3_1751331224314.jpg"
+                                alt="Interactive activities with children" class="category-image"
+                                style="height: 120px;">
+                            <img src="attached_assets/tsnvs5_1751331224315.jpg"
+                                alt="Connecting with elderly participants" class="category-image"
+                                style="height: 120px;">
+                            <img src="attached_assets/tsnvs6_1751331224315.jpg"
+                                alt="Joyful moments with children and seniors" class="category-image"
+                                style="height: 120px;">
+                        </div>
+                    </div>
+
+                    <!-- Trăng Xanh Card -->
+                    <div class="gallery-category-card fade-in">
+                        <div class="category-header">
+                            <i class="fas fa-moon" style="color: #6CD0D0;"></i>
+                            <h3>Trăng Xanh</h3>
+                        </div>
+                        <p class="category-description">Mid-Autumn Project - Sensory-friendly events for children with
+                            autism, ADHD, and speech impairments</p>
+                        <div class="category-images"
+                            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1rem;">
+                            <img src="attached_assets/trangxanh_1751331331536.jpg"
+                                alt="Candle lighting ceremony with children in circle" class="category-image"
+                                style="height: 120px;">
+                            <img src="attached_assets/trangxanh1_1751331331537.jpg"
+                                alt="Intimate candle lighting with participants" class="category-image"
+                                style="height: 120px;">
+                            <img src="attached_assets/trangxanh2_1751331331538.jpg"
+                                alt="Group celebration and community meal" class="category-image"
+                                style="height: 120px;">
+                            <img src="attached_assets/trangxanh3_1751331331543.jpg"
+                                alt="Evening atmosphere with traditional lanterns" class="category-image"
+                                style="height: 120px;">
+                            <img src="attached_assets/trangxanh4_1751331331545.jpg"
+                                alt="Children engaging in lantern activities" class="category-image"
+                                style="height: 120px;">
+                            <img src="attached_assets/475063853_474477579040012_8317139132987123358_n_1751331331534.jpg"
+                                alt="Beautiful lantern display in the evening" class="category-image"
+                                style="height: 120px;">
+                            <img src="attached_assets/475251806_474477482373355_2303872134644392325_n_1751331331535.jpg"
+                                alt="Community gathering with candles and prayers" class="category-image"
+                                style="height: 120px;">
+                        </div>
+                    </div>
+
+                    <!-- WeChange Card -->
+                    <div class="gallery-category-card fade-in">
+                        <div class="category-header">
+                            <i class="fas fa-leaf" style="color: #B1DDC9;"></i>
+                            <h3>WeChange</h3>
+                        </div>
+                        <p class="category-description">Environmental Nonprofit - Co-founder leading eco-education and
+                            plastic waste reduction campaigns</p>
+                        <div class="category-images"
+                            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
+                            <img src="attached_assets/Screenshot 2025-05-29 at 11.15.17_1751331446101.png"
+                                alt="WeChange organization profile and mission" class="category-image"
+                                style="height: 120px;">
+                        </div>
+                    </div>
+
+                    <!-- Courses & Certificate Card -->
+                    <div class="gallery-category-card fade-in">
+                        <div class="category-header">
+                            <i class="fas fa-graduation-cap" style="color: #FFCBDB;"></i>
+                            <h3>Courses & Certificate</h3>
+                        </div>
+                        <p class="category-description">Academic achievements, certifications, and learning milestones
+                            from various programs</p>
+                        <div class="category-images"
+                            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
+                            <img src="attached_assets/1_1751529360392.png"
+                                alt="Vietnam National Secondary Student Science and Engineering Fair Certificate - Fourth Prize in Systems Software"
+                                class="category-image" style="height: 120px;">
+                            <img src="attached_assets/2_1751529360392.png"
+                                alt="Vietnam National Secondary Student Science and Engineering Fair Certificate - Systems Software Category"
+                                class="category-image" style="height: 120px;">
+                            <img src="attached_assets/3_1751529360392.png"
+                                alt="IELTS Test Report Form - Academic English Proficiency Certificate"
+                                class="category-image" style="height: 120px;">
+                            <img src="attached_assets/4_1751529360392.png"
+                                alt="CTG English Club Certificate of Achievement - PR Department Recognition"
+                                class="category-image" style="height: 120px;">
+                            <img src="attached_assets/5_1751529360392.png"
+                                alt="School Certificate of Commendation - Outstanding Youth Union Activities"
+                                class="category-image" style="height: 120px;">
+                            <img src="attached_assets/6_1751529360391.png"
+                                alt="Provincial First Prize Certificate - Science and Engineering Fair 2024-2025"
+                                class="category-image" style="height: 120px;">
+                            <img src="attached_assets/7_1751529360391.png"
+                                alt="Provincial First Prize Certificate - Science and Engineering Fair (Second Document)"
+                                class="category-image" style="height: 120px;">
+                            <img src="attached_assets/8_1751529360391.png"
+                                alt="Provincial Excellent Student Certificate - English Subject 2021-2022"
+                                class="category-image" style="height: 120px;">
+                            <img src="attached_assets/9_1751529360391.png"
+                                alt="District First Prize Certificate - English Competition 2021-2022"
+                                class="category-image" style="height: 120px;">
+                            <img src="attached_assets/10_1751529360389.PNG"
+                                alt="CTG English Club Certificate of Achievement - Halloween Event 2023"
+                                class="category-image" style="height: 120px;">
+                            <img src="attached_assets/11_1751529360390.PNG"
+                                alt="CTG Studio Photography Club Certificate - Active Member Recognition"
+                                class="category-image" style="height: 120px;">
+                            <img src="attached_assets/12_1751529360390.PNG"
+                                alt="Kode With Klossy Scholar Acceptance - Data Science Camp 2025"
+                                class="category-image" style="height: 120px;">
+                            <img src="attached_assets/13_1751529360390.PNG"
+                                alt="Ho Chi Minh City Education Department Certificate - MOTIONLENS Project Recognition"
+                                class="category-image" style="height: 120px;">
+                            <img src="attached_assets/CC_3_1751331494853.jpg"
+                                alt="CodeGym Data Analyst Certificate of Completion" class="category-image"
+                                style="height: 120px;">
+                            <img src="attached_assets/CC_4_1751331494855.jpg"
+                                alt="MOTIONLENS Research Project Verification Document" class="category-image"
+                                style="height: 120px;">
+                            <img src="attached_assets/Screenshot_1751331805260.png"
+                                alt="CodeGym Data Analyst Certificate - Fundamentals of Data Analysis, Python, and Visualization"
+                                class="category-image" style="height: 120px;">
+                            <img src="attached_assets/CC_2_1751331582648.png"
+                                alt="WeChange Environmental Leadership Certificate" class="category-image"
+                                style="height: 120px;">
+                        </div>
+                    </div>
+
+                    <!-- Personal Photos Card -->
+                    <div class="gallery-category-card fade-in">
+                        <div class="category-header">
+                            <i class="fas fa-user" style="color: #6CD0D0;"></i>
+                            <h3>Personal Photos</h3>
+                        </div>
+                        <p class="category-description">Casual moments, professional portraits, and personal milestones
+                        </p>
+                        <div class="category-images"
+                            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1rem;">
+                            <img src="attached_assets/IMG_7029_1750145639071.JPG" alt="Personal portrait"
+                                class="category-image" style="height: 120px;">
+                            <img src="attached_assets/IMG_7015_1751331637044.JPG"
+                                alt="Professional portrait with student ID" class="category-image"
+                                style="height: 120px;">
+                            <img src="attached_assets/IMG_7021_1751331637044.JPG"
+                                alt="Academic achievement photo with award certificate" class="category-image"
+                                style="height: 120px;">
+                            <img src="attached_assets/edited1_1751331637039.jpg" alt="Reading and studying moment"
+                                class="category-image" style="height: 120px;">
+                            <img src="attached_assets/edited2_1751331637042.jpg" alt="Relaxed casual portrait"
+                                class="category-image" style="height: 120px;">
+                            <img src="attached_assets/edited3_1751331637043.jpg" alt="Working on laptop"
+                                class="category-image" style="height: 120px;">
+                            <img src="attached_assets/z6696762742978_cf460e7924f3b3b6c75501d56aa64a79_1751331637047.jpg"
+                                alt="Profile portrait with certificates background" class="category-image"
+                                style="height: 120px;">
+                            <img src="attached_assets/z6696762822758_417acb1ad8e0e0c31ddac26732dedbd4_1751331637048.jpg"
+                                alt="Confident pose with hands on hips" class="category-image" style="height: 120px;">
+                            <img src="attached_assets/z6696762832255_a6fb72def7b3071b61773e5e4902f654_1751331637048.jpg"
+                                alt="Side profile portrait" class="category-image" style="height: 120px;">
+                            <img src="attached_assets/z6696762986668_4dfe3d67172d2262a1c5a1c2fac93d88_1751331637048.jpg"
+                                alt="Pointing gesture with academic lanyard" class="category-image"
+                                style="height: 120px;">
+                            <img src="attached_assets/z6696763026428_c986a7047d6790035cdd1db4988bc01a_1751331637049.jpg"
+                                alt="Happy moment looking up" class="category-image" style="height: 120px;">
+                            <img src="attached_assets/z6696763032750_fdab6396e7f60753917c53582fd16b3c_1751331637049.jpg"
+                                alt="Natural smile portrait" class="category-image" style="height: 120px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Image Modal -->
+    <div id="imageModal" class="image-modal">
+        <span class="close-modal">&times;</span>
+        <img class="modal-content" id="modalImage">
+        <div class="modal-caption" id="modalCaption"></div>
+    </div>
+
+    <script>
+        // Navigation functionality
+        const navTabs = document.querySelectorAll('.nav-tab');
+        const sections = document.querySelectorAll('.section');
+
+        navTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const targetSection = tab.getAttribute('data-section');
+
+                // Remove active class from all tabs and sections
+                navTabs.forEach(t => t.classList.remove('active'));
+                sections.forEach(s => s.classList.remove('active'));
+
+                // Add active class to clicked tab and target section
+                tab.classList.add('active');
+                document.getElementById(targetSection).classList.add('active');
+            });
+        });
+
+        // Contact form functionality
+        document.getElementById('contactForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+
+            // Create mailto link
+            const subject = `Portfolio Contact from ${name}`;
+            const body = `Hello Ngoc,\n\nName: ${name}\nEmail: ${email}\n\nMessage:\n${message}`;
+            const mailtoLink = `mailto:ngoctranxk1610@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+            // Open email client
+            window.location.href = mailtoLink;
+
+            // Show success message
+            alert('Thank you for your message! Your email client should open now.');
+
+            // Reset form
+            this.reset();
+        });
+
+        // Particle animation
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+
+                // Random size
+                const size = Math.random() * 4 + 2;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+
+                // Random position
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+
+                // Random animation delay
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Scroll animations
+        function checkScrollAnimation() {
+            const elements = document.querySelectorAll('.fade-in');
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('visible');
+                }
+            });
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function () {
+            createParticles();
+            checkScrollAnimation();
+
+            // Add scroll event listener
+            window.addEventListener('scroll', checkScrollAnimation);
+
+            // Initial animation for home section
+            setTimeout(() => {
+                const homeElements = document.querySelectorAll('#home .fade-in');
+                homeElements.forEach((element, index) => {
+                    setTimeout(() => {
+                        element.classList.add('visible');
+                    }, index * 200);
+                });
+            }, 100);
+        });
+
+        // Smooth scrolling for better UX
+        window.addEventListener('scroll', function () {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('.bg-particles');
+            const speed = scrolled * 0.5;
+            parallax.style.transform = `translateY(${speed}px)`;
+        });
+
+        // Add typing animation to hero title
+        function typeWriter(element, text, speed = 100) {
+            let i = 0;
+            element.innerHTML = '';
+
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            type();
+        }
+
+        // Initialize typing animation when page loads
+        window.addEventListener('load', function () {
+            const heroTitle = document.querySelector('.hero-title');
+            if (heroTitle) {
+                const originalText = heroTitle.textContent;
+                setTimeout(() => {
+                    typeWriter(heroTitle, originalText, 80);
+                }, 500);
+            }
+        });
+
+        // Add interactive hover effects
+        document.querySelectorAll('.achievement-card, .leadership-item, .skill-item, .recommendation-card').forEach(card => {
+            card.addEventListener('mouseenter', function () {
+                this.style.transform = 'translateY(-5px) scale(1.02)';
+            });
+
+            card.addEventListener('mouseleave', function () {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Add click to copy functionality for contact info
+        document.querySelectorAll('.contact-item').forEach(item => {
+            item.addEventListener('click', function () {
+                const text = this.querySelector('span').textContent;
+                if (text.includes('@')) {
+                    // Email
+                    navigator.clipboard.writeText(text).then(() => {
+                        this.style.background = 'rgba(34, 197, 94, 0.2)';
+                        setTimeout(() => {
+                            this.style.background = 'rgba(255, 255, 255, 0.05)';
+                        }, 1000);
+                    });
+                } else if (text.includes('github')) {
+                    // GitHub
+                    window.open('https://' + text, '_blank');
+                }
+            });
+        });
+
+        // Image zoom modal functionality
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        const modalCaption = document.getElementById('modalCaption');
+        const closeBtn = document.querySelector('.close-modal');
+
+        // Add click event to all images
+        function initImageZoom() {
+            const allImages = document.querySelectorAll('.gallery-image, .category-image, .portrait-image');
+
+            allImages.forEach(img => {
+                img.addEventListener('click', function () {
+                    modal.style.display = 'block';
+                    modalImg.src = this.src;
+                    modalCaption.textContent = this.alt || 'Photo from portfolio';
+                });
+            });
+        }
+
+        // Close modal when clicking X
+        closeBtn.addEventListener('click', function () {
+            modal.style.display = 'none';
+        });
+
+        // Close modal when clicking outside the image
+        modal.addEventListener('click', function (e) {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && modal.style.display === 'block') {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Initialize image zoom when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function () {
+            initImageZoom();
+        });
+    </script>
+</body>
+
+</html>
